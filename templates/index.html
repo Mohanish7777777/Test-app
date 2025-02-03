@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Simulator</title>
+    <style>
+        .section {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Crypto Simulator</h1>
+
+    <!-- Caesar Cipher -->
+    <div class="section">
+        <h2>Caesar Cipher</h2>
+        <input id="caesar-text" placeholder="Enter text">
+        <input id="caesar-shift" placeholder="Enter shift">
+        <button onclick="runCaesar()">Run</button>
+        <p id="caesar-result"></p>
+    </div>
+
+    <!-- Vigenère Cipher -->
+    <div class="section">
+        <h2>Vigenère Cipher</h2>
+        <input id="vigenere-text" placeholder="Enter text">
+        <input id="vigenere-key" placeholder="Enter key">
+        <button onclick="runVigenere()">Run</button>
+        <p id="vigenere-result"></p>
+    </div>
+
+    <!-- DES Encryption -->
+    <div class="section">
+        <h2>DES Encryption</h2>
+        <input id="des-text" placeholder="Enter text">
+        <button onclick="runDES()">Run</button>
+        <p id="des-result"></p>
+    </div>
+
+    <!-- AES Encryption -->
+    <div class="section">
+        <h2>AES Encryption</h2>
+        <input id="aes-text" placeholder="Enter text">
+        <button onclick="runAES()">Run</button>
+        <p id="aes-result"></p>
+    </div>
+
+    <!-- RSA Encryption -->
+    <div class="section">
+        <h2>RSA Encryption</h2>
+        <input id="rsa-text" placeholder="Enter text">
+        <button onclick="runRSA()">Run</button>
+        <p id="rsa-result"></p>
+    </div>
+
+    <!-- Diffie-Hellman Key Exchange -->
+    <div class="section">
+        <h2>Diffie-Hellman Key Exchange</h2>
+        <input id="dh-p" placeholder="Enter prime (p)">
+        <input id="dh-g" placeholder="Enter base (g)">
+        <input id="dh-private-a" placeholder="Enter private key A">
+        <input id="dh-private-b" placeholder="Enter private key B">
+        <button onclick="runDiffieHellman()">Run</button>
+        <p id="dh-result"></p>
+    </div>
+
+    <!-- MAC Generation -->
+    <div class="section">
+        <h2>MAC Generation</h2>
+        <input id="mac-message" placeholder="Enter message">
+        <input id="mac-key" placeholder="Enter key">
+        <button onclick="runMAC()">Run</button>
+        <p id="mac-result"></p>
+    </div>
+
+    <!-- Hash Algorithm -->
+    <div class="section">
+        <h2>Hash Algorithm</h2>
+        <input id="hash-message" placeholder="Enter message">
+        <button onclick="runHash()">Run</button>
+        <p id="hash-result"></p>
+    </div>
+
+<!-- Rail Fence Cipher -->
+<div class="section">
+    <h2>Rail Fence Cipher</h2>
+    <input id="rail-text" placeholder="Enter text">
+    <input id="rail-rails" placeholder="Number of rails">
+    <button onclick="runRailFence()">Run</button>
+    <p id="rail-result"></p>
+</div>
+
+<!-- Playfair Cipher -->
+<div class="section">
+    <h2>Playfair Cipher</h2>
+    <input id="playfair-text" placeholder="Enter text">
+    <input id="playfair-key" placeholder="Enter key">
+    <button onclick="runPlayfair()">Run</button>
+    <p id="playfair-result"></p>
+</div>
+
+<!-- Hill Cipher -->
+<div class="section">
+    <h2>Hill Cipher</h2>
+    <input id="hill-text" placeholder="Enter text">
+    <input id="hill-key" placeholder="Key matrix (e.g., [[6,24,1],[13,16,10],[20,17,15]]">
+    <button onclick="runHill()">Run</button>
+    <p id="hill-result"></p>
+</div>
+
+<!-- Pseudorandom Number Generation -->
+<div class="section">
+    <h2>Pseudorandom Numbers (PNG)</h2>
+    <input id="png-seed" placeholder="Enter seed">
+    <input id="png-length" placeholder="Enter length">
+    <button onclick="runPNG()">Run</button>
+    <p id="png-result"></p>
+</div>
+
+<!-- ECC -->
+<div class="section">
+    <h2>Elliptic Curve Cryptography (ECC)</h2>
+    <input id="ecc-a" placeholder="Curve parameter a">
+    <input id="ecc-b" placeholder="Curve parameter b">
+    <input id="ecc-p" placeholder="Prime p">
+    <button onclick="runECC()">Run</button>
+    <p id="ecc-result"></p>
+</div>
+
+<!-- ElGamal -->
+<div class="section">
+    <h2>ElGamal Algorithm</h2>
+    <input id="elgamal-p" placeholder="Prime p">
+    <input id="elgamal-g" placeholder="Generator g">
+    <input id="elgamal-private" placeholder="Private key">
+    <input id="elgamal-plaintext" placeholder="Plaintext (number)">
+    <button onclick="runElGamal()">Run</button>
+    <p id="elgamal-result"></p>
+</div>
+
+    <script>
+        async function runCaesar() {
+            const text = document.getElementById('caesar-text').value;
+            const shift = document.getElementById('caesar-shift').value;
+            const response = await fetch('/caesar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text, shift })
+            });
+            const result = await response.json();
+            document.getElementById('caesar-result').innerText = result.result;
+        }
+
+        async function runVigenere() {
+            const text = document.getElementById('vigenere-text').value;
+            const key = document.getElementById('vigenere-key').value;
+            const response = await fetch('/vigenere', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text, key })
+            });
+            const result = await response.json();
+            document.getElementById('vigenere-result').innerText = result.result;
+        }
+
+        async function runDES() {
+            const text = document.getElementById('des-text').value;
+            const response = await fetch('/des', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text })
+            });
+            const result = await response.json();
+            document.getElementById('des-result').innerText = `Ciphertext: ${result.ciphertext}, Decrypted: ${result.decrypted}`;
+        }
+
+        async function runAES() {
+            const text = document.getElementById('aes-text').value;
+            const response = await fetch('/aes', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text })
+            });
+            const result = await response.json();
+            document.getElementById('aes-result').innerText = `Ciphertext: ${result.ciphertext}, Decrypted: ${result.decrypted}`;
+        }
+
+        async function runRSA() {
+            const text = document.getElementById('rsa-text').value;
+            const response = await fetch('/rsa', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text })
+            });
+            const result = await response.json();
+            document.getElementById('rsa-result').innerText = `Ciphertext: ${result.ciphertext}, Decrypted: ${result.decrypted}`;
+        }
+
+        async function runDiffieHellman() {
+            const p = document.getElementById('dh-p').value;
+            const g = document.getElementById('dh-g').value;
+            const private_a = document.getElementById('dh-private-a').value;
+            const private_b = document.getElementById('dh-private-b').value;
+            const response = await fetch('/diffie-hellman', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ p, g, private_a, private_b })
+            });
+            const result = await response.json();
+            document.getElementById('dh-result').innerText = `Success: ${result.success}, Shared Secret: ${result.shared_secret}`;
+        }
+
+        async function runMAC() {
+            const message = document.getElementById('mac-message').value;
+            const key = document.getElementById('mac-key').value;
+            const response = await fetch('/mac', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message, key })
+            });
+            const result = await response.json();
+            document.getElementById('mac-result').innerText = `MAC: ${result.mac}`;
+        }
+
+        async function runHash() {
+            const message = document.getElementById('hash-message').value;
+            const response = await fetch('/hash', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message })
+            });
+            const result = await response.json();
+            document.getElementById('hash-result').innerText = `Hash: ${result.hash}`;
+        }
+        // Rail Fence
+    async function runRailFence() {
+        const text = document.getElementById('rail-text').value;
+        const rails = document.getElementById('rail-rails').value;
+        const response = await fetch('/railfence', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text, rails })
+        });
+        const result = await response.json();
+        document.getElementById('rail-result').innerText = 
+            `Ciphertext: ${result.ciphertext}, Decrypted: ${result.decrypted}`;
+    }
+
+    // Playfair
+    async function runPlayfair() {
+        const text = document.getElementById('playfair-text').value;
+        const key = document.getElementById('playfair-key').value;
+        const response = await fetch('/playfair', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text, key })
+        });
+        const result = await response.json();
+        document.getElementById('playfair-result').innerText = 
+            `Ciphertext: ${result.ciphertext}`;
+    }
+
+    // Hill Cipher
+    async function runHill() {
+        const text = document.getElementById('hill-text').value;
+        const key = JSON.parse(document.getElementById('hill-key').value);
+        const response = await fetch('/hill', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text, key_matrix: key })
+        });
+        const result = await response.json();
+        document.getElementById('hill-result').innerText = 
+            `Ciphertext: ${result.ciphertext}`;
+    }
+
+    // PNG
+    async function runPNG() {
+        const seed = document.getElementById('png-seed').value;
+        const length = document.getElementById('png-length').value;
+        const response = await fetch('/png', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ seed, length })
+        });
+        const result = await response.json();
+        document.getElementById('png-result').innerText = 
+            `Numbers: ${result.numbers}`;
+    }
+
+    // ECC
+    async function runECC() {
+        const a = document.getElementById('ecc-a').value;
+        const b = document.getElementById('ecc-b').value;
+        const p = document.getElementById('ecc-p').value;
+        const response = await fetch('/ecc', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ a: parseInt(a), b: parseInt(b), p: parseInt(p) })
+        });
+        const result = await response.json();
+        document.getElementById('ecc-result').innerText = 
+            `Shared A: ${result.shared_a}, Shared B: ${result.shared_b}`;
+    }
+
+    // ElGamal
+    async function runElGamal() {
+        const p = document.getElementById('elgamal-p').value;
+        const g = document.getElementById('elgamal-g').value;
+        const private_key = document.getElementById('elgamal-private').value;
+        const plaintext = document.getElementById('elgamal-plaintext').value;
+        const response = await fetch('/elgamal', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                p: parseInt(p), 
+                g: parseInt(g), 
+                private_key: parseInt(private_key), 
+                plaintext: parseInt(plaintext) 
+            })
+        });
+        const result = await response.json();
+        document.getElementById('elgamal-result').innerText = 
+            `Ciphertext: (${result.ciphertext[0]}, ${result.ciphertext[1]}), Decrypted: ${result.decrypted}`;
+    }
+    </script>
+</body>
+</html>
